@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8">
+		<title>chrome_memo</title>
+		<link rel="stylesheet" href="style.css">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+	</head>
+<body>
+	<ul class="nav nav-tabs" id="myTab" role="tablist">
+		<!-- <li class="nav-item" role="presentation">
+		  <button
+			class="nav-link active"
+			id="memo1-tab"
+			data-bs-toggle="tab"
+			data-bs-target="#memo1"
+			type="button"
+			role="tab"
+			aria-controls="memo1"
+			aria-selected="true"
+		  >
+			memo1
+		  </button>
+		</li>
+		<li class="nav-item" role="presentation">
+		  <button
+			class="nav-link"
+			id="memo2-tab"
+			data-bs-toggle="tab"
+			data-bs-target="#memo2"
+			type="button"
+			role="tab"
+			aria-controls="memo2"
+			aria-selected="false"
+		  >
+			memo2
+		  </button>
+		</li>
+		<li class="nav-item" role="presentation">
+		  <button
+			class="nav-link"
+			id="memo3-tab"
+			data-bs-toggle="tab"
+			data-bs-target="#memo3"
+			type="button"
+			role="tab"
+			aria-controls="memo3"
+			aria-selected="false"
+		  >
+			memo3
+		  </button>
+		</li> -->
+	  </ul>
+	  <div class="tab-content" id="myTabContent">
+		<div
+		  class="tab-pane fade show active"
+		  id="memo1"
+		  role="tabpanel"
+		  aria-labelledby="memo1-tab"
+		>
+		  memo1
+		</div>
+		<div
+		  class="tab-pane fade"
+		  id="memo2"
+		  role="tabpanel"
+		  aria-labelledby="memo2-tab"
+		>
+		  memo2
+		</div>
+		<div
+		  class="tab-pane fade"
+		  id="memo3"
+		  role="tabpanel"
+		  aria-labelledby="memo3-tab"
+		>
+		  memo3
+		</div>
+	  </div>
+	  <button id="tabButton">add tab</button>
+	  <script src="content.js"></script>
+</body>
+</html>
