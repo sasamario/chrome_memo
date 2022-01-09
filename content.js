@@ -1,14 +1,14 @@
-let liAttributes = [
+const liAttributes = [
 	'class',
 	'role'
 ];
 
-let liValues = [
+const liValues = [
 	'nav-item',
 	'presentation'
 ];
 
-let buttonAttributes = [
+const buttonAttributes = [
 	'class',
 	'id',
 	'data-bs-toggle',
@@ -18,6 +18,8 @@ let buttonAttributes = [
 	'aria-controls',
 	'aria-selected'
 ];
+
+let buttonValues = [];
 
 let tabTotalCount = 3;
 
@@ -37,7 +39,7 @@ $(function() {
 		let objLiCount = i + 1;
 		let objButton = document.createElement('button');
 
-		let buttonValues = [
+		buttonValues = [
 			'nav-link', 
 			'memo' + objLiCount + '-tab',
 			'tab',
@@ -47,6 +49,10 @@ $(function() {
 			'memo' + objLiCount,
 			'false'
 		];
+
+		if (i == 0) {
+			buttonValues[0] = 'nav-link active';
+		}
 
 		objLi = createTab(objLi, liAttributes, liValues);
 		objButton = createTab(objButton, buttonAttributes, buttonValues);
@@ -61,7 +67,7 @@ $(function() {
 		let objLiCount = objUl.childElementCount + 1;
 		let objButton = document.createElement('button');
 		
-		let buttonValues = [
+		buttonValues = [
 			'nav-link', 
 			'memo' + objLiCount + '-tab',
 			'tab',
