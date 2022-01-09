@@ -9,3 +9,17 @@
 
 
 JavaScriptで動的に追加した要素に関しては、onでイベントを指定しないと発火しない
+参考：https://hajimete.org/jquery-added-element-click
+
+chrome extension localstorage setについて
+setする際のkeyに当たる部分に変数値を使用することができない？？
+そのため、事前にオブジェクトに格納してそれをセットする必要がある
+
+・JavaScript オブジェクトと連想配列の違い（使い方、記述方法、値の取り出し方等）
+連想配列は値が入るのに対して、JavaScriptのオブジェクトは値として関数も入れることができる
+
+書き方は
+const obj = {key: value, ket2: value2}
+
+取り出し方は
+obj[key] //value 
