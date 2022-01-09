@@ -1,0 +1,15 @@
+{
+    "name": "chrome_memo",
+    "description": "シンプルなメモ",
+    "version": "1.0.0",
+    "manifest_version": 2,
+    "permissions": [
+        "storage"
+    ],
+    "browser_action": {
+        "default_icon": {
+            "16": "img/bunbougu_memo.png"
+        },
+        "default_popup": "index.html"
+    }
+  }
