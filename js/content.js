@@ -73,22 +73,26 @@ $(function() {
 		objLi.appendChild(objButton);
 	});
 
-	//動的に追加した要素に対してもclickイベントを発火させる
+	//動的に追加した要素に対してもclickイベントを発火
 	$('#myTab').on('click', '.nav-link', function() {
-		//どのtabかの情報を取得する
+		//どのtabかの情報を取得
 		let tabId = $(this).attr('id');
 
+		//tab選択時に該当するメモをテキストエリアに反映させる
 		chrome.storage.local.get(tabId, function(result) {
-			$('#memoArea').val(result.tabId); //result.tabIdはない場合undefinedになる
+			$('#memoArea').val(result[tabId]); //result.tabIdはない場合undefinedになる
 
 			//textaraのカウント数を反映
 			// reflectCount();
 		});
 	});
 
-	//keyup処理 keyupの都度保存するようにする？
+	//メモ保存処理
 	$('#memoArea').keyup(function() {
 		let tabId = $('.active').attr('id');
-		chrome.storage.local.set({tabId: $('#memoArea').val()}, function(){});
+		let setObj = {};
+		setObj[tabId] = $('#memoArea').val();
+		
+		chrome.storage.local.set(setObj, function(){});
 	});
 });
