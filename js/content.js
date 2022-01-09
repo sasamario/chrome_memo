@@ -28,6 +28,19 @@ let createTab = (object, attributes) => {
 	return object;
 }
 
+// let getDateTime = () => {
+// 	let date = new Date();
+// 	let year = date.getFullYear();
+// 	let month = date.getMonth() + 1;
+// 	let day = date.getDate();
+// 	let hour = date.getHours();
+// 	let min = date.getMinutes();
+// 	let sec = date.getSeconds();
+// 	let result = `${year}${month}${day}${hour}${min}${sec}`;
+
+// 	return result;
+// }
+
 $(function() {
 	for (let i = 0; i < tabTotalCount; i++) {
 		let objLi = document.createElement('li');
@@ -37,6 +50,10 @@ $(function() {
 		//最初のタブをactive状態にする
 		if (i == 0) {
 			buttonAttributes['class'] = 'nav-link active';
+			let tabId = 'memo' + objLiCount;
+			chrome.storage.local.get(tabId, function(result) {
+				$('#memoArea').val(result[tabId]);
+			});
 		} else {
 			buttonAttributes['class'] = 'nav-link';
 		}
@@ -47,7 +64,7 @@ $(function() {
 
 		objLi = createTab(objLi, liAttributes);
 		objButton = createTab(objButton, buttonAttributes);
-		objButton.innerHTML = 'memo' + objLiCount;
+		objButton.innerHTML = objLiCount;
 		
 		objUl.appendChild(objLi);
 		objLi.appendChild(objButton);
@@ -63,11 +80,10 @@ $(function() {
 		buttonAttributes['data-bs-target'] = '#memo' + objLiCount;
 		buttonAttributes['aria-controls'] = 'memo' + objLiCount;
 
-
 		objLi = createTab(objLi, liAttributes);
 		objButton = createTab(objButton, buttonAttributes);
 		
-		objButton.innerHTML = 'memo' + objLiCount;
+		objButton.innerHTML = objLiCount;
 		
 		objUl.appendChild(objLi);
 		objLi.appendChild(objButton);
@@ -80,7 +96,7 @@ $(function() {
 
 		//tab選択時に該当するメモをテキストエリアに反映させる
 		chrome.storage.local.get(tabId, function(result) {
-			$('#memoArea').val(result[tabId]); //result.tabIdはない場合undefinedになる
+			$('#memoArea').val(result[tabId]);
 
 			//textaraのカウント数を反映
 			// reflectCount();
@@ -95,4 +111,35 @@ $(function() {
 		
 		chrome.storage.local.set(setObj, function(){});
 	});
+
+	//ダウンロード処理
+	$('#download').on('click', function() {
+		let fileName = ''
+		let memo = $('#memoArea').val();
+		let tabId = $('.active').attr('id');
+
+		if (!memo) {
+			alert('メモを記載してください');
+			return;
+		}
+
+		//ファイル名入力ダイアログ
+		fileNameInput = window.prompt("ファイル名を入力してください");
+		if (fileNameInput == null) {
+			return;
+		} else if(fileNameInput != '') {
+			fileName = fileNameInput + '.txt';
+		} else {
+			fileName = tabId + '.txt';
+		}
+
+		let blob = new Blob([memo], {type: 'text/plain'});
+
+		let downloadLink = document.createElement('a');
+		downloadLink.href = URL.createObjectURL(blob);
+		downloadLink.download = fileName;
+		downloadLink.click();
+	});
+
+
 });
