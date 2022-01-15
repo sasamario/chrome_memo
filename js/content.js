@@ -15,8 +15,8 @@ let buttonAttributes = {
 };
 
 let objUl = document.getElementById('myTab');
-
 let tabTotalCount = 3;
+let setObj = {};
 
 //tabの属性値セット処理
 let createTab = (object, attributes) => {
@@ -42,39 +42,52 @@ let createTab = (object, attributes) => {
 // }
 
 $(function() {
-	for (let i = 0; i < tabTotalCount; i++) {
-		let objLi = document.createElement('li');
-		let objLiCount = i + 1;
-		let objButton = document.createElement('button');
-
-		//最初のタブをactive状態にする
-		if (i == 0) {
-			buttonAttributes['class'] = 'nav-link active';
-			let tabId = 'memo' + objLiCount;
-			chrome.storage.local.get(tabId, function(result) {
-				$('#memoArea').val(result[tabId]);
-			});
-		} else {
-			buttonAttributes['class'] = 'nav-link';
+	chrome.storage.local.get('tabTotalCount', function(result) {
+		if (result['tabTotalCount'] !== undefined) {
+			tabTotalCount =  result['tabTotalCount'];
 		}
-		//tabの各属性値にメモ番号を付与する
-		buttonAttributes['id'] = 'memo' + objLiCount;
-		buttonAttributes['data-bs-target'] = '#memo' + objLiCount;
-		buttonAttributes['aria-controls'] = 'memo' + objLiCount;
 
-		objLi = createTab(objLi, liAttributes);
-		objButton = createTab(objButton, buttonAttributes);
-		objButton.innerHTML = objLiCount;
-		
-		objUl.appendChild(objLi);
-		objLi.appendChild(objButton);
-	}
+		for (let i = 0; i < tabTotalCount; i++) {
+			let objLi = document.createElement('li');
+			let objLiCount = i + 1;
+			let objButton = document.createElement('button');
+	
+			//最初のタブをactive状態にする
+			if (i == 0) {
+				buttonAttributes['class'] = 'nav-link active';
+				let tabId = 'memo' + objLiCount;
+				chrome.storage.local.get(tabId, function(result) {
+					$('#memoArea').val(result[tabId]);
+				});
+			} else {
+				buttonAttributes['class'] = 'nav-link';
+			}
+			//tabの各属性値にメモ番号を付与する
+			buttonAttributes['id'] = 'memo' + objLiCount;
+			buttonAttributes['data-bs-target'] = '#memo' + objLiCount;
+			buttonAttributes['aria-controls'] = 'memo' + objLiCount;
+	
+			objLi = createTab(objLi, liAttributes);
+			objButton = createTab(objButton, buttonAttributes);
+			objButton.innerHTML = objLiCount;
+			
+			objUl.appendChild(objLi);
+			objLi.appendChild(objButton);
+		}
+	});
+
+	
 
 	//タブ追加ボタン（仮）
 	$('#tabButton').on('click', function() {
 		let objLi = document.createElement('li');
 		let objLiCount = objUl.childElementCount + 1;
 		let objButton = document.createElement('button');
+
+		if (objLiCount >= 10) {
+			alert('メモは最大10個までです');
+			return;
+		}
 		
 		buttonAttributes['id'] = 'memo' + objLiCount;
 		buttonAttributes['data-bs-target'] = '#memo' + objLiCount;
@@ -87,6 +100,11 @@ $(function() {
 		
 		objUl.appendChild(objLi);
 		objLi.appendChild(objButton);
+
+		//tabの数をlocalstorageに格納する
+		setObj['tabTotalCount'] = objLiCount;
+		console.log(setObj);
+		chrome.storage.local.set(setObj, function(){});
 	});
 
 	//動的に追加した要素に対してもclickイベントを発火
@@ -106,7 +124,6 @@ $(function() {
 	//メモ保存処理
 	$('#memoArea').keyup(function() {
 		let tabId = $('.active').attr('id');
-		let setObj = {};
 		setObj[tabId] = $('#memoArea').val();
 		
 		chrome.storage.local.set(setObj, function(){});
@@ -137,9 +154,8 @@ $(function() {
 
 		let downloadLink = document.createElement('a');
 		downloadLink.href = URL.createObjectURL(blob);
+		console.log(downloadLink);
 		downloadLink.download = fileName;
 		downloadLink.click();
 	});
-
-
 });
