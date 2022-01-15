@@ -14,7 +14,7 @@ let buttonAttributes = {
 	'aria-selected': 'false'
 };
 
-let objUl = document.getElementById('myTab');
+let objUl = document.getElementById('my_tab');
 let tabTotalCount = 3;
 let activeTab = 'memo1';
 let setObj = {};
@@ -64,7 +64,7 @@ $(function() {
 				buttonAttributes['class'] = 'nav-link active';
 				let tabId = 'memo' + objLiCount;
 				chrome.storage.local.get(tabId, function(result) {
-					$('#memoArea').val(result[tabId]);
+					$('#memo_area').val(result[tabId]);
 				});
 			} else {
 				buttonAttributes['class'] = 'nav-link';
@@ -86,7 +86,7 @@ $(function() {
 	
 
 	//タブ追加ボタン（仮）
-	$('#tabButton').on('click', function() {
+	$('#add').on('click', function() {
 		let objLi = document.createElement('li');
 		let objLiCount = objUl.childElementCount + 1;
 		let objButton = document.createElement('button');
@@ -115,13 +115,13 @@ $(function() {
 	});
 
 	//動的に追加した要素に対してもclickイベントを発火
-	$('#myTab').on('click', '.nav-link', function() {
+	$('#my_tab').on('click', '.nav-link', function() {
 		//どのtabかの情報を取得
 		let tabId = $(this).attr('id');
 
 		//tab選択時に該当するメモをテキストエリアに反映させる
 		chrome.storage.local.get(tabId, function(result) {
-			$('#memoArea').val(result[tabId]);
+			$('#memo_area').val(result[tabId]);
 
 			//textaraのカウント数を反映
 			// reflectCount();
@@ -133,17 +133,18 @@ $(function() {
 	});
 
 	//メモ保存処理
-	$('#memoArea').keyup(function() {
-		let tabId = $('.active').attr('id');
-		setObj[tabId] = $('#memoArea').val();
-		
-		chrome.storage.local.set(setObj, function(){});
+	$('#memo_area').keyup(function() {
+		saveMemo();
+	});
+
+	$('#memo_area').blur(function() {
+		saveMemo();
 	});
 
 	//ダウンロード処理
 	$('#download').on('click', function() {
 		let fileName = ''
-		let memo = $('#memoArea').val();
+		let memo = $('#memo_area').val();
 		let tabId = $('.active').attr('id');
 
 		if (!memo) {
@@ -169,4 +170,19 @@ $(function() {
 		downloadLink.download = fileName;
 		downloadLink.click();
 	});
+
+	//メモ保存処理
+	let saveMemo = () => {
+		//保存処理
+		let tabId = $('.active').attr('id');
+		setObj[tabId] = $('#memo_area').val();
+		chrome.storage.local.set(setObj, function(){});
+
+		//保存メッセージ表示・非表示処理
+		$('#memo_name').text(tabId);
+		if ($('#save_message').css('display') === 'none') {
+			$('#save_message').fadeIn(1000).css('display', 'block');
+			$('#save_message').fadeOut(2000);
+		}
+	}
 });
