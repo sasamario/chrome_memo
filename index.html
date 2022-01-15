@@ -9,13 +9,18 @@
 		<script src="js/bootstrap.bundle.js"></script>
 	</head>
 <body>
-	<ul class="nav nav-tabs" id="myTab" role="tablist">
-	</ul>
-	  <div class="tab-content" id="myTabContent">
-		  <textarea name="memo-area" id="memoArea" class="memo-area" cols="30" rows="10"></textarea>
-	  </div>
-	  <button id="tabButton">add tab</button>
-	  <button id="download">download</button>
-	  <script src="js/content.js"></script>
+	<ul class="nav nav-tabs" id="my_tab" role="tablist"></ul>
+	<div class="tab-content" id="my_tab_content">
+		<textarea name="memo-area" id="memo_area" class="memo-area" cols="30" rows="10"></textarea>
+		<div class="memo-footer">
+			<p id="count">○○文字</p>
+			<p id="save_message"><span id="memo_name"></span>を保存しました</p>
+		</div>
+	</div>
+	<div class="buttons">
+		<button id="add">add tab</button>
+		<button id="download">download</button>
+	</div>
+	<script src="js/content.js"></script>
 </body>
 </html>
