@@ -6,3 +6,19 @@ body {
 	width: 100%;
 }
 
+.memo-footer {
+	height: 24px;
+	text-align: right;
+	margin-bottom: 4px;
+}
+
+#save_message {
+	display: none;
+	color: gray;
+}
+
+#count, #save_message {
+	height: 12px;
+	font-size: 8px;
+	margin: 0;
+}
