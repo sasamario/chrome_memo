@@ -16,6 +16,7 @@ let buttonAttributes = {
 
 let objUl = document.getElementById('myTab');
 let tabTotalCount = 3;
+let activeTab = 'memo1';
 let setObj = {};
 
 //tabの属性値セット処理
@@ -42,18 +43,24 @@ let createTab = (object, attributes) => {
 // }
 
 $(function() {
-	chrome.storage.local.get('tabTotalCount', function(result) {
+	chrome.storage.local.get(['tabTotalCount', 'activeTab'], function(result) {
 		if (result['tabTotalCount'] !== undefined) {
 			tabTotalCount =  result['tabTotalCount'];
+		}
+
+		//最後にactiveだったtabを取得
+		if (result['activeTab'] !== undefined) {
+			activeTab = result['activeTab']
 		}
 
 		for (let i = 0; i < tabTotalCount; i++) {
 			let objLi = document.createElement('li');
 			let objLiCount = i + 1;
 			let objButton = document.createElement('button');
+			let objTabId = 'memo' + objLiCount;
 	
-			//最初のタブをactive状態にする
-			if (i == 0) {
+			//最後にactiveだったtab情報がある場合、そのtabをactiveにする
+			if (objTabId == activeTab) {
 				buttonAttributes['class'] = 'nav-link active';
 				let tabId = 'memo' + objLiCount;
 				chrome.storage.local.get(tabId, function(result) {
@@ -63,7 +70,7 @@ $(function() {
 				buttonAttributes['class'] = 'nav-link';
 			}
 			//tabの各属性値にメモ番号を付与する
-			buttonAttributes['id'] = 'memo' + objLiCount;
+			buttonAttributes['id'] = objTabId;
 			buttonAttributes['data-bs-target'] = '#memo' + objLiCount;
 			buttonAttributes['aria-controls'] = 'memo' + objLiCount;
 	
@@ -119,6 +126,10 @@ $(function() {
 			//textaraのカウント数を反映
 			// reflectCount();
 		});
+
+		//activeTabの番号をstorageにセット
+		setObj['activeTab'] = tabId
+		chrome.storage.local.set(setObj, function(){});
 	});
 
 	//メモ保存処理
