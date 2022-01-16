@@ -65,6 +65,8 @@ $(function() {
 				let tabId = 'memo' + objLiCount;
 				chrome.storage.local.get(tabId, function(result) {
 					$('#memo_area').val(result[tabId]);
+					//カウント数を反映させる
+					getCount();
 				});
 			} else {
 				buttonAttributes['class'] = 'nav-link';
@@ -82,8 +84,6 @@ $(function() {
 			objLi.appendChild(objButton);
 		}
 	});
-
-	
 
 	//タブ追加ボタン（仮）
 	$('#add').on('click', function() {
@@ -123,8 +123,8 @@ $(function() {
 		chrome.storage.local.get(tabId, function(result) {
 			$('#memo_area').val(result[tabId]);
 
-			//textaraのカウント数を反映
-			// reflectCount();
+			//カウント数を反映させる
+			getCount();
 		});
 
 		//activeTabの番号をstorageにセット
@@ -135,6 +135,7 @@ $(function() {
 	//メモ保存処理
 	$('#memo_area').keyup(function() {
 		saveMemo();
+		getCount();
 	});
 
 	$('#memo_area').blur(function() {
@@ -184,5 +185,20 @@ $(function() {
 			$('#save_message').fadeIn(1000).css('display', 'block');
 			$('#save_message').fadeOut(2000);
 		}
+	}
+
+	//カウント処理（拡張機能起動時、keyup時、タブ切り替え時に実行する）
+	function getCount() {
+		let count = 0;
+		//textareaを取得
+		let memo = $('#memo_area').val();
+
+		//取得情報を元に文字数をカウント
+		for (let i = 0; i < memo.length; i++) {
+			count++;
+		}
+
+		//画面上に反映
+		$('#count').text(count);
 	}
 });
