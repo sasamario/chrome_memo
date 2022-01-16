@@ -17,7 +17,7 @@ body {
 	color: gray;
 }
 
-#count, #save_message {
+#count_area, #save_message {
 	height: 12px;
 	font-size: 8px;
 	margin: 0;
