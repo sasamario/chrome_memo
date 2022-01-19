@@ -110,7 +110,6 @@ $(function() {
 
 		//tabの数をlocalstorageに格納する
 		setObj['tabTotalCount'] = objLiCount;
-		console.log(setObj);
 		chrome.storage.local.set(setObj, function(){});
 	});
 
@@ -140,6 +139,75 @@ $(function() {
 
 	$('#memo_area').blur(function() {
 		saveMemo();
+	});
+
+	$('#delete').on('click', function() {
+		//一番後ろのtab番号を取得する
+		let objLiCount = objUl.childElementCount;
+		let deleteTabId = 'memo' + objLiCount;
+
+		//確認ダイアログ
+		let deleteConfirm = window.confirm(deleteTabId + 'を削除しますか？');
+
+		//確認ダイアログで削除するを選択した場合、一番後ろのメモを削除する
+		if (deleteConfirm) {
+			//削除処理(空値をセット)
+			setObj[deleteTabId] = '';
+			chrome.storage.local.set(setObj, function(){});
+
+			//現状のタブ要素の削除(emptyで対象の子要素を削除)
+			$('#my_tab').empty();
+
+			//tab再描画 TODO:リファクタリング可能であればする
+			chrome.storage.local.get('tabTotalCount', function(result) {
+				if (result['tabTotalCount'] !== undefined) {
+					tabTotalCount =  result['tabTotalCount'];
+					if (tabTotalCount > 3) {
+						tabTotalCount--;
+					}
+				} else {
+					tabTotalCount = 3;
+				}
+		
+				//削除後は必ずmemo1をactiveにする
+				activeTab = 'memo1';
+		
+				for (let i = 0; i < tabTotalCount; i++) {
+					let objLi = document.createElement('li');
+					let objLiCount = i + 1;
+					let objButton = document.createElement('button');
+					let objTabId = 'memo' + objLiCount;
+			
+					//最後にactiveだったtab情報がある場合、そのtabをactiveにする
+					if (objTabId == activeTab) {
+						buttonAttributes['class'] = 'nav-link active';
+						let tabId = 'memo' + objLiCount;
+						chrome.storage.local.get(tabId, function(result) {
+							$('#memo_area').val(result[tabId]);
+							//カウント数を反映させる
+							getCount();
+						});
+					} else {
+						buttonAttributes['class'] = 'nav-link';
+					}
+					//tabの各属性値にメモ番号を付与する
+					buttonAttributes['id'] = objTabId;
+					buttonAttributes['data-bs-target'] = '#memo' + objLiCount;
+					buttonAttributes['aria-controls'] = 'memo' + objLiCount;
+			
+					objLi = createTab(objLi, liAttributes);
+					objButton = createTab(objButton, buttonAttributes);
+					objButton.innerHTML = objLiCount;
+					
+					objUl.appendChild(objLi);
+					objLi.appendChild(objButton);
+				}
+			});
+
+			//tabの数更新
+			setObj['tabTotalCount'] = tabTotalCount;
+			chrome.storage.local.set(setObj, function(){});
+		}
 	});
 
 	//ダウンロード処理
