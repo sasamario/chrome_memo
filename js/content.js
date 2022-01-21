@@ -50,7 +50,7 @@ $(function() {
 
 		//最後にactiveだったtabを取得
 		if (result['activeTab'] !== undefined) {
-			activeTab = result['activeTab']
+			activeTab = result['activeTab'];
 		}
 
 		for (let i = 0; i < tabTotalCount; i++) {
@@ -91,7 +91,7 @@ $(function() {
 		let objLiCount = objUl.childElementCount + 1;
 		let objButton = document.createElement('button');
 
-		if (objLiCount >= 10) {
+		if (objLiCount > 10) {
 			alert('メモは最大10個までです');
 			return;
 		}
@@ -146,6 +146,12 @@ $(function() {
 		let objLiCount = objUl.childElementCount;
 		let deleteTabId = 'memo' + objLiCount;
 
+		//memoが3つしかない場合、削除はしない
+		if (objLiCount === 3) {
+			alert('これ以上は削除できません');
+			return '';
+		}
+
 		//確認ダイアログ
 		let deleteConfirm = window.confirm(deleteTabId + 'を削除しますか？');
 
@@ -161,7 +167,9 @@ $(function() {
 			//tab再描画 TODO:リファクタリング可能であればする
 			chrome.storage.local.get('tabTotalCount', function(result) {
 				if (result['tabTotalCount'] !== undefined) {
+					//ここで取得した値がおかしかった　削除時に何故か2つ一気に削除されている原因？
 					tabTotalCount =  result['tabTotalCount'];
+					console.log(tabTotalCount);
 					if (tabTotalCount > 3) {
 						tabTotalCount--;
 					}
@@ -202,11 +210,15 @@ $(function() {
 					objUl.appendChild(objLi);
 					objLi.appendChild(objButton);
 				}
-			});
 
-			//tabの数更新
-			setObj['tabTotalCount'] = tabTotalCount;
-			chrome.storage.local.set(setObj, function(){});
+				//tabの数更新
+				setObj['tabTotalCount'] = tabTotalCount;
+				chrome.storage.local.set(setObj, function(){});
+
+				//activeTabの番号をstorageにセット
+				setObj['activeTab'] = activeTab;
+				chrome.storage.local.set(setObj, function(){});
+			});
 		}
 	});
 
