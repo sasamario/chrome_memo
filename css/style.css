@@ -22,3 +22,8 @@ body {
 	font-size: 8px;
 	margin: 0;
 }
+
+.option img {
+	width: 25px;
+	height: 25px;
+}
