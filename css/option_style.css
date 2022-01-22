@@ -1,0 +1,21 @@
+body {
+	width: 300px;
+	height: 350px;
+}
+
+.option-section {
+	margin: 5px 0;
+}
+
+.option-title {
+	margin: 5px 0;
+}
+
+.option-wrap {
+	width: 90%;
+	margin: 10px auto;
+}
+
+#size_input {
+	width: 100%;
+}
