@@ -11,5 +11,6 @@
             "16": "img/bunbougu_memo.png"
         },
         "default_popup": "index.html"
-    }
+    },
+    "options_page": "option.html"
   }
