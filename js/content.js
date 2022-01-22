@@ -53,8 +53,10 @@ $(function() {
 			activeTab = result['activeTab'];
 		}
 
+		//設定サイズの反映
 		if (result['sizeOption'] !== undefined) {
 			$('body').css('width', result['sizeOption']);
+			$('#size_input').val(result['sizeOption']);
 		}
 
 		for (let i = 0; i < tabTotalCount; i++) {
@@ -254,6 +256,13 @@ $(function() {
 		console.log(downloadLink);
 		downloadLink.download = fileName;
 		downloadLink.click();
+	});
+
+	//スライダー
+	$('#size_input').on('change', function() {
+		$('body').css('width', $(this).val());
+		setObj['sizeOption'] = $(this).val();
+		chrome.storage.local.set(setObj, function(){});
 	});
 
 	//メモ保存処理

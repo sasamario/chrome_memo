@@ -27,3 +27,8 @@ body {
 	width: 25px;
 	height: 25px;
 }
+
+#size_input {
+	width: 80px;
+	transform: scale(-1, 1);
+}
