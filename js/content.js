@@ -43,7 +43,7 @@ let createTab = (object, attributes) => {
 // }
 
 $(function() {
-	chrome.storage.local.get(['tabTotalCount', 'activeTab'], function(result) {
+	chrome.storage.local.get(['tabTotalCount', 'activeTab', 'sizeOption'], function(result) {
 		if (result['tabTotalCount'] !== undefined) {
 			tabTotalCount =  result['tabTotalCount'];
 		}
@@ -51,6 +51,10 @@ $(function() {
 		//最後にactiveだったtabを取得
 		if (result['activeTab'] !== undefined) {
 			activeTab = result['activeTab'];
+		}
+
+		if (result['sizeOption'] !== undefined) {
+			$('body').css('width', result['sizeOption']);
 		}
 
 		for (let i = 0; i < tabTotalCount; i++) {
