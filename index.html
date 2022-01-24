@@ -5,11 +5,18 @@
 		<title>chrome_memo</title>
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" href="css/all.css">
 		<script src="js/jquery-3.6.0.min.js"></script>
 		<script src="js/bootstrap.bundle.js"></script>
 	</head>
 <body>
-	<ul class="nav nav-tabs" id="my_tab" role="tablist"></ul>
+	<div class="header">
+		<ul class="nav nav-tabs" id="my_tab" role="tablist"></ul>
+		<div class="header-buttons">
+			<i id="add" class="fas fa-plus-square font-button"></i>
+			<i id="delete" class="fas fa-minus-square font-button"></i>
+		</div>
+	</div>
 	<div class="tab-content" id="my_tab_content">
 		<textarea name="memo-area" id="memo_area" class="memo-area" cols="30" rows="10"></textarea>
 		<div class="memo-footer">
@@ -17,13 +24,18 @@
 			<p id="save_message"><span id="memo_name"></span>を保存しました</p>
 		</div>
 	</div>
-	<div class="buttons">
-		<button id="add">add tab</button>
-		<button id="delete">delete</button>
-		<button id="download">download</button>
-		<a href="option.html" class="option"><img src="img/option.png" alt="設定"></a>
+	<div class="footer">
+		<div class="button-box">
+			<i id="download" class="fas fa-file-download font-button"></i>
+		</div>
+		<div class="button-box slide-box">
+			<i class="fas fa-arrows-alt-h font-button"></i>
+			<input type="range" id="size_input" min="360" max="800" step="5" value="400">
+		</div>
+		<div class="button-box">
+			<a href="option.html" class="option"><i class="fas fa-cog font-button"></i>setting</a>
+		</div>
 	</div>
-	<input type="range" id="size_input" min="300" max="800" step="5" value="400">
 	<script src="js/content.js"></script>
 </body>
 </html>
