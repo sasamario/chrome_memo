@@ -2,6 +2,29 @@ body {
 	width: 400px;
 }
 
+.header {
+	display: flex;
+}
+
+.nav-tabs {
+	width: 80%;
+}
+
+.header-buttons {
+	width: 20%;
+	text-align: right;
+}
+
+.font-button {
+	cursor: pointer;
+	font-size: 30px;
+}
+
+.font-button:hover {
+	opacity: 0.8;
+}
+
+
 .memo-area {
 	width: 100%;
 }
@@ -23,12 +46,54 @@ body {
 	margin: 0;
 }
 
-.option img {
-	width: 25px;
-	height: 25px;
+.footer {
+	display: flex;
+	margin: 10px;
+}
+
+.button-box {
+	margin: 0 5px;
+	vertical-align: middle;
+}
+
+.option {
+	text-align: right;
 }
 
 #size_input {
 	width: 80px;
-	transform: scale(-1, 1);
+	display: none;
+	opacity: 0;
+}
+
+
+@keyframes slide-in {
+	0% {
+		transform: translateX(-30px);
+		transform: scale(-1, 1);
+	}
+	50% {
+		opacity: 0.5;
+	}
+	100% {
+		opacity: 1;
+		transform: translateX(0px);
+		transform: scale(-1, 1);
+	}
+}
+
+@keyframes slide-out {
+	0% {
+		opacity: 1;
+		transform: translateX(0px);
+		transform: scale(-1, 1);
+	}
+	50% {
+		opacity: 0.5;
+	}
+	100% {
+		opacity: 0;
+		transform: translateX(-30px);
+		transform: scale(-1, 1);
+	}
 }
