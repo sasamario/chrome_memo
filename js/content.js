@@ -60,7 +60,7 @@ $(function() {
 		}
 
 		//tab生成
-		loopGenerateTab(activeTab);
+		loopGenerateTab(tabTotalCount, activeTab);
 	});
 
 	//tab追加
@@ -158,7 +158,7 @@ $(function() {
 				//削除後は必ずmemo1をactiveにする
 				activeTab = 'memo1';
 
-				loopGenerateTab(activeTab);
+				loopGenerateTab(tabTotalCount, activeTab);
 
 				//tabの数更新
 				setObj['tabTotalCount'] = tabTotalCount;
@@ -208,6 +208,22 @@ $(function() {
 		chrome.storage.local.set(setObj, function(){});
 	});
 
+	$('.slide-box').hover(
+		function() {
+			//hoverが乗っている時の処理
+			$('#size_input').css('display', 'inline-block');
+			$('#size_input').css('animation', 'slide-in 1.0s ease-out forwards');
+		},
+		function() {
+			let element = document.getElementById('size_input');
+			//hoverが外れた場合の処理
+			$('#size_input').css('animation', 'slide-out 1.0s ease-out forwards')
+			element.addEventListener('animationend', function() {
+				$('#size_input').css('display', 'none');
+			});
+		}
+	);
+
 	//メモ保存処理
 	let saveMemo = () => {
 		//保存処理
@@ -239,7 +255,7 @@ $(function() {
 	}
 
 	//tabをループで生成する処理
-	function loopGenerateTab(activeTab = '') {
+	function loopGenerateTab(tabTotalCount, activeTab = '') {
 		for (let i = 0; i < tabTotalCount; i++) {
 			let objLi = document.createElement('li');
 			let objLiCount = i + 1;
