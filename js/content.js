@@ -29,19 +29,6 @@ let createTab = (object, attributes) => {
 	return object;
 }
 
-// let getDateTime = () => {
-// 	let date = new Date();
-// 	let year = date.getFullYear();
-// 	let month = date.getMonth() + 1;
-// 	let day = date.getDate();
-// 	let hour = date.getHours();
-// 	let min = date.getMinutes();
-// 	let sec = date.getSeconds();
-// 	let result = `${year}${month}${day}${hour}${min}${sec}`;
-
-// 	return result;
-// }
-
 $(function() {
 	chrome.storage.local.get(['tabTotalCount', 'activeTab', 'sizeOption'], function(result) {
 		if (result['tabTotalCount'] !== undefined) {
@@ -73,8 +60,10 @@ $(function() {
 			alert('メモは最大10個までです');
 			return;
 		}
+
+		let newTabId = 'memo' + objLiCount;
 		
-		buttonAttributes['id'] = 'memo' + objLiCount;
+		buttonAttributes['id'] = newTabId;
 		buttonAttributes['data-bs-target'] = '#memo' + objLiCount;
 		buttonAttributes['aria-controls'] = 'memo' + objLiCount;
 
@@ -85,6 +74,16 @@ $(function() {
 		
 		objUl.appendChild(objLi);
 		objLi.appendChild(objButton);
+
+		//現在のtabからactiveクラスを取り除き、新しく追加したtabにactiveクラスを追加
+		$('.active').removeClass('active');
+		$(`#${newTabId}`).addClass('active');
+		$('#memo_area').val('');
+		getCount();
+
+		//activeTabの番号をstorageにセット
+		setObj['activeTab'] = newTabId;
+		chrome.storage.local.set(setObj, function(){});
 
 		//tabの数をlocalstorageに格納する
 		setObj['tabTotalCount'] = objLiCount;
