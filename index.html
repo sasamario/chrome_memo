@@ -3,9 +3,9 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>chrome_memo</title>
-		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/bootstrap.css">
 		<link rel="stylesheet" href="css/all.css">
+		<link rel="stylesheet" href="css/style.css">
 		<script src="js/jquery-3.6.0.min.js"></script>
 		<script src="js/bootstrap.bundle.js"></script>
 	</head>
@@ -26,14 +26,23 @@
 	</div>
 	<div class="footer">
 		<div class="button-box">
-			<i id="download" class="fas fa-file-download font-button"></i>
+			<button type="button" id="download" class="btn btn-outline-secondary icon-button">
+				<i class="fas fa-file-download font-button"></i>
+				<p class="icon-text">download</p>
+			</button>
 		</div>
 		<div class="button-box slide-box">
-			<i class="fas fa-arrows-alt-h font-button"></i>
+			<button type="button" class="btn btn-outline-secondary icon-button">
+				<i class="far fa-window-maximize font-button"></i>
+				<p class="icon-text">size</p>
+			</button>
 			<input type="range" id="size_input" min="360" max="800" step="5" value="400">
 		</div>
 		<div class="button-box">
-			<a href="option.html" class="option"><i class="fas fa-cog font-button"></i>setting</a>
+			<button type="button" id="option" class="btn btn-outline-secondary icon-button">
+				<i class="fas fa-cog font-button"></i>
+				<p class="icon-text">option</p>
+			</button>
 		</div>
 	</div>
 	<script src="js/content.js"></script>
