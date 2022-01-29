@@ -224,6 +224,10 @@ $(function() {
 		}
 	);
 
+	$('#option').on('click', function() {
+		window.location.href = 'option.html';
+	});
+
 	//メモ保存処理
 	let saveMemo = () => {
 		//保存処理
