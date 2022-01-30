@@ -14,7 +14,12 @@ let buttonAttributes = {
 	'aria-selected': 'false'
 };
 
-let objUl = document.getElementById('my_tab');
+const objUl = document.getElementById('my_tab');
+// const memoArea = document.getElementById('memo_area');
+// const memoAreaConfig = {
+// 	characterData: true
+// }
+
 let tabTotalCount = 3;
 let activeTab = 'memo1';
 let setObj = {};
@@ -114,6 +119,17 @@ $(function() {
 		saveMemo();
 		getCount();
 	});
+
+	// $('#memo_area').change(function() {
+	// 	console.log("変更検知");
+	// });
+
+	// let observer = new MutationObserver(function() {
+	// 	saveMemo();
+	// 	getCount();
+	// 	console.log('変更検知');
+	// });
+	// observer.observe(memoArea, memoAreaConfig);
 
 	$('#memo_area').blur(function() {
 		saveMemo();
