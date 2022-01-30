@@ -2,10 +2,10 @@ $(function() {
 	const initialWidth = 400;
 
 	//設定画面起動時に、storageの値をスライダーに反映
-	chrome.storage.local.get('sizeOption', function(result) {
-		if (result['sizeOption'] !== undefined) {
-			$('#size_input').val(result['sizeOption']);
-			$('#size_value').html(result['sizeOption']);
+	chrome.storage.local.get('widthOption', function(result) {
+		if (result['widthOption'] !== undefined) {
+			$('#size_input').val(result['widthOption']);
+			$('#size_value').html(result['widthOption']);
 		}
 	});
 
@@ -29,7 +29,7 @@ $(function() {
 
 	$('#option_save').on('click', function() {
 		let setObj = {};
-		setObj['sizeOption'] = $('#size_input').val();
+		setObj['widthOption'] = $('#size_input').val();
 		chrome.storage.local.set(setObj, function(){});
 	});
 });
