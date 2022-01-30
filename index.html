@@ -13,8 +13,8 @@
 	<div class="header">
 		<ul class="nav nav-tabs" id="my_tab" role="tablist"></ul>
 		<div class="header-buttons">
-			<i id="add" class="fas fa-plus-square font-button"></i>
-			<i id="delete" class="fas fa-minus-square font-button"></i>
+			<i id="add" class="fas fa-plus-square icon"></i>
+			<i id="delete" class="fas fa-minus-square icon"></i>
 		</div>
 	</div>
 	<div class="tab-content" id="my_tab_content">
@@ -27,20 +27,20 @@
 	<div class="footer">
 		<div class="button-box">
 			<button type="button" id="download" class="btn btn-outline-secondary icon-button">
-				<i class="fas fa-file-download font-button"></i>
+				<i class="fas fa-file-download icon"></i>
 				<p class="icon-text">download</p>
 			</button>
 		</div>
 		<div class="button-box slide-box">
 			<button type="button" class="btn btn-outline-secondary icon-button">
-				<i class="far fa-window-maximize font-button"></i>
-				<p class="icon-text">size</p>
+				<i class="far fa-window-maximize icon"></i>
+				<input type="range" id="size_input" min="360" max="800" step="5" value="400">
+				<p class="icon-text">resize</p>
 			</button>
-			<input type="range" id="size_input" min="360" max="800" step="5" value="400">
 		</div>
 		<div class="button-box">
 			<button type="button" id="option" class="btn btn-outline-secondary icon-button">
-				<i class="fas fa-cog font-button"></i>
+				<i class="fas fa-cog icon"></i>
 				<p class="icon-text">option</p>
 			</button>
 		</div>
