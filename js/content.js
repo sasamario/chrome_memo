@@ -30,7 +30,7 @@ let createTab = (object, attributes) => {
 }
 
 $(function() {
-	chrome.storage.local.get(['tabTotalCount', 'activeTab', 'sizeOption'], function(result) {
+	chrome.storage.local.get(['tabTotalCount', 'activeTab', 'widthOption', 'heightOption'], function(result) {
 		if (result['tabTotalCount'] !== undefined) {
 			tabTotalCount =  result['tabTotalCount'];
 		}
@@ -41,9 +41,13 @@ $(function() {
 		}
 
 		//設定サイズの反映
-		if (result['sizeOption'] !== undefined) {
-			$('body').css('width', result['sizeOption']);
-			$('#size_input').val(result['sizeOption']);
+		if (result['widthOption'] !== undefined) {
+			$('body').css('width', result['widthOption']);
+			$('#size_input').val(result['widthOption']);
+		}
+
+		if (result['heightOption'] !== undefined) {
+			$('#memo_area').css('height', result['heightOption']);
 		}
 
 		//tab生成
@@ -81,12 +85,9 @@ $(function() {
 		$('#memo_area').val('');
 		getCount();
 
-		//activeTabの番号をstorageにセット
-		setObj['activeTab'] = newTabId;
-		chrome.storage.local.set(setObj, function(){});
-
 		//tabの数をlocalstorageに格納する
 		setObj['tabTotalCount'] = objLiCount;
+		setObj['activeTab'] = newTabId;
 		chrome.storage.local.set(setObj, function(){});
 	});
 
@@ -116,6 +117,8 @@ $(function() {
 
 	$('#memo_area').blur(function() {
 		saveMemo();
+		setObj['heightOption'] = $('#memo_area').css('height');
+		chrome.storage.local.set(setObj, function(){});
 	});
 
 	$('#delete').on('click', function() {
@@ -146,7 +149,6 @@ $(function() {
 				if (result['tabTotalCount'] !== undefined) {
 					//ここで取得した値がおかしかった　削除時に何故か2つ一気に削除されている原因？
 					tabTotalCount =  result['tabTotalCount'];
-					console.log(tabTotalCount);
 					if (tabTotalCount > 3) {
 						tabTotalCount--;
 					}
@@ -200,29 +202,16 @@ $(function() {
 		downloadLink.click();
 	});
 
-	//スライダー
+	//resize
 	$('#size_input').on('change', function() {
 		$('body').css('width', $(this).val());
-		setObj['sizeOption'] = $(this).val();
+		setObj['widthOption'] = $(this).val();
+		//ここでtextareaの高さ値も保存する
+		setObj['heightOption'] = $('#memo_area').css('height');
 		chrome.storage.local.set(setObj, function(){});
 	});
 
-	$('.slide-box').hover(
-		function() {
-			//hoverが乗っている時の処理
-			$('#size_input').css('display', 'inline-block');
-			$('#size_input').css('animation', 'slide-in 1.0s ease-out forwards');
-		},
-		function() {
-			let element = document.getElementById('size_input');
-			//hoverが外れた場合の処理
-			$('#size_input').css('animation', 'slide-out 1.0s ease-out forwards')
-			element.addEventListener('animationend', function() {
-				$('#size_input').css('display', 'none');
-			});
-		}
-	);
-
+	//option遷移処理
 	$('#option').on('click', function() {
 		window.location.href = 'option.html';
 	});
