@@ -3873,7 +3873,7 @@ textarea.form-control-lg {
   border-top-right-radius: 0.3rem;
 }
 .nav-tabs .nav-link:hover {
-  background-color: #bd8c7d;
+  background-color: #f29c2b;
   opacity: 0.6;
   color: #fff;
   border-color: #e9ecef #e9ecef #dee2e6;
@@ -3887,7 +3887,7 @@ textarea.form-control-lg {
 .nav-tabs .nav-link.active,a
 .nav-tabs .nav-item.show .nav-link {
   color: #fff;
-  background-color: #bd8c7d;
+  background-color: #f29c2b;
   /* border-color: #dee2e6 #dee2e6 #fff; */
 }
 .nav-tabs .nav-link,
