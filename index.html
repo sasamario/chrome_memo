@@ -20,8 +20,8 @@
 	<div class="tab-content" id="my_tab_content">
 		<textarea name="memo-area" id="memo_area" class="memo-area" cols="30" rows="10"></textarea>
 		<div class="memo-footer">
-			<p id="count_area"><span id="count">0</span>文字</p>
-			<p id="save_message"><span id="memo_name"></span>を保存しました</p>
+			<p id="count_area"><span id="count">0</span><span id="count_unit"></span></p>
+			<p id="save_message"><span id="memo_name"></span> <span id="save_text"></span></p>
 		</div>
 	</div>
 	<div class="footer">
@@ -32,7 +32,7 @@
 			</button>
 		</div>
 		<div class="button-box slide-box">
-			<button type="button" class="btn btn-outline-secondary icon-button">
+			<button type="button" id="resize" class="btn btn-outline-secondary icon-button">
 				<i class="far fa-window-maximize icon"></i>
 				<input type="range" id="size_input" min="360" max="800" step="5" value="400">
 				<p class="icon-text">resize</p>
