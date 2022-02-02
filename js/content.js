@@ -14,6 +14,34 @@ let buttonAttributes = {
 	'aria-selected': 'false'
 };
 
+const LANGUAGE = {
+	'japanese': {
+		'count_unit': '文字',
+		'save_text': '保存しました',
+		'download': '出力',
+		'resize': 'リサイズ',
+		'option': '設定',
+		'add_alert': 'メモは最大10個までです',
+		'delete_alert': 'これ以上は削除できません',
+		'delete_confirm': '削除しますか？',
+		'download_alert': 'メモは空です',
+		'download_confirm': 'ファイル名を入力してください'
+	},
+	'english': {
+		'count_unit': 'characters',
+		'save_text': 'saved',
+		'download': 'download',
+		'resize': 'resize',
+		'option': 'option',
+		'add_alert': 'You can only add up to 10 memos',
+		'delete_alert': 'Cannot be deleted anymore',
+		'delete_confirm': 'Do you want to delete?',
+		'download_alert': 'The memo is empty',
+		'download_confirm': 'Please enter the file name'
+	}
+};
+
+let language = 'english';
 let objUl = document.getElementById('my_tab');
 let tabTotalCount = 3;
 let activeTab = 'memo1';
@@ -27,10 +55,14 @@ let createTab = (object, attributes) => {
 	});
 
 	return object;
-}
+};
 
 $(function() {
-	chrome.storage.local.get(['tabTotalCount', 'activeTab', 'widthOption', 'heightOption'], function(result) {
+	chrome.storage.local.get(['tabTotalCount', 'activeTab', 'widthOption', 'heightOption', 'langOption'], function(result) {
+		//言語設定適用
+		language = (result['langOption'] === undefined) ? 'english' : result['langOption'];
+		reflectLangOption(LANGUAGE[language]);
+		
 		if (result['tabTotalCount'] !== undefined) {
 			tabTotalCount =  result['tabTotalCount'];
 		}
@@ -61,7 +93,7 @@ $(function() {
 		let objButton = document.createElement('button');
 
 		if (objLiCount > 10) {
-			alert('メモは最大10個までです');
+			alert(LANGUAGE[language]['add_alert']);
 			return;
 		}
 
@@ -128,12 +160,12 @@ $(function() {
 
 		//memoが3つしかない場合、削除はしない
 		if (objLiCount === 3) {
-			alert('これ以上は削除できません');
+			alert(LANGUAGE[language]['delete_alert']);
 			return '';
 		}
 
 		//確認ダイアログ
-		let deleteConfirm = window.confirm(deleteTabId + 'を削除しますか？');
+		let deleteConfirm = window.confirm(LANGUAGE[language]['delete_confirm'] + `(${deleteTabId})`);
 
 		//確認ダイアログで削除するを選択した場合、一番後ろのメモを削除する
 		if (deleteConfirm) {
@@ -179,12 +211,12 @@ $(function() {
 		let tabId = $('.active').attr('id');
 
 		if (!memo) {
-			alert('メモを記載してください');
+			alert(LANGUAGE[language]['download_alert']);
 			return;
 		}
 
 		//ファイル名入力ダイアログ
-		fileNameInput = window.prompt("ファイル名を入力してください");
+		fileNameInput = window.prompt(LANGUAGE[language]['download_confirm']);
 		if (fileNameInput == null) {
 			return;
 		} else if(fileNameInput != '') {
@@ -278,5 +310,14 @@ $(function() {
 			objUl.appendChild(objLi);
 			objLi.appendChild(objButton);
 		}
+	}
+
+	//言語設定反映処理
+	function reflectLangOption(Option) {
+		$('#count_unit').text(Option['count_unit']);
+		$('#save_text').text(Option['save_text']);
+		$('#download .icon-text').text(Option['download']);
+		$('#resize .icon-text').text(Option['resize']);
+		$('#option .icon-text').text(Option['option']);
 	}
 });
