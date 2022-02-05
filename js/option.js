@@ -1,29 +1,39 @@
 const initialWidth = 400;
+
+//言語設定（デフォルトは英語）
+let language = 'english';
 const LANGUAGE = {
 	'japanese': {
 		'page_title': '設定画面',
 		'lang_title': '言語',
-		'lang_ja': '日本語',
-		'lang_en': '英語',
-		'home': 'ホーム',
-		'save': '保存',
-		'reset': '初期化',
-		'reset_confirm': '初期化しますか？\n※メモも削除されます',
-		'save_alert': '設定が保存されました'
+		'ja_text': '日本語',
+		'en_text': '英語',
+		'home_text': 'ホーム',
+		'save_text': '保存',
+		'reset_text': '初期化'
 	},
 	'english': {
 		'page_title': 'OptionPage',
 		'lang_title': 'Language',
-		'lang_ja': 'Japanese',
-		'lang_en': 'English',
-		'home': 'home',
-		'save': 'save',
-		'reset': 'reset',
+		'ja_text': 'Japanese',
+		'en_text': 'English',
+		'home_text': 'home',
+		'save_text': 'save',
+		'reset_text': 'reset'
+	}
+}
+
+//その他メッセージ（アラート、ダイアログ等）
+const OTHER_MESSAGE = {
+	'japanese': {
+		'reset_confirm': '初期化しますか？\n※メモも削除されます',
+		'save_alert': '設定が保存されました'
+	},
+	'english': {
 		'reset_confirm': 'Do you want to initialize？\n※The memo will also be deleted',
 		'save_alert': 'The settings have been saved'
 	}
 }
-let language = 'english';
 
 $(function() {
 	//設定画面起動時に、storageの値をスライダーに反映
@@ -49,7 +59,7 @@ $(function() {
 	});
 
 	$('#option_reset').on('click', function() {
-		let deleteConfirm = window.confirm(LANGUAGE[language]['reset_confirm']);
+		let deleteConfirm = window.confirm(OTHER_MESSAGE[language]['reset_confirm']);
 
 		if (deleteConfirm) {
 			//localstorageの初期化
@@ -80,7 +90,7 @@ $(function() {
 		setObj['widthOption'] = $('#size_input').val();
 		setObj['langOption'] = language;
 		chrome.storage.local.set(setObj, function(){});
-		alert(LANGUAGE[beforeLanguage]['save_alert']);
+		alert(OTHER_MESSAGE[beforeLanguage]['save_alert']);
 
 		//言語設定反映
 		reflectLangOption(LANGUAGE[language]);
@@ -93,12 +103,8 @@ $(function() {
 
 	//言語設定反映
 	function reflectLangOption(Option) {
-		$('#page_title').text(Option['page_title']);
-		$('#lang_title').text(Option['lang_title']);
-		$('#text_ja').text(Option['lang_ja']);
-		$('#text_en').text(Option['lang_en']);
-		$('#home .icon-text').text(Option['home']);
-		$('#option_save .icon-text').text(Option['save']);
-		$('#option_reset .icon-text').text(Option['reset']);
+		for (key in Option) {
+			$(`#${key}`).text(Option[key]);
+		}
 	}
 });
