@@ -3,29 +3,43 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>chrome_memo</title>
-		<link rel="stylesheet" href="css/option_style.css">
 		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" href="css/all.css">
+		<link rel="stylesheet" href="css/option_style.css">
 		<script src="js/jquery-3.6.0.min.js"></script>
 		<script src="js/bootstrap.bundle.js"></script>
 		<script src="js/option.js"></script>
 	</head>
 	<body>
+		<p class="page-title"><i class="fas fa-cog"></i><span id="page_title">OptionPage</span></p>
 		<div class="option-wrap">
 			<div class="option-section">
-				<p class="option-title">サイズ変更(現在：<span id="size_value">400</span>px)</p>
-				<input type="range" id="size_input" min="360" max="800" step="10" value="400">
-			</div>
-			<div class="option-section">
-				<input type="radio" id="lang_en" name="lang" value="english">
-				<label for="lang_en">English</label>
+				<p class="option-title"><i class="fas fa-language"></i> <span id="lang_title">Language</span></p>
 				<input type="radio" id="lang_ja" name="lang" value="japanese">
-				<label for="lang_ja">Japanese</label>
+				<label for="lang_ja"><span id="text_ja">Japanese</span></label>
+				<input type="radio" id="lang_en" name="lang" value="english">
+				<label for="lang_en"><span id="text_en">English</span></label>
 			</div>
-			<div class="option-section">
-				<button id="option_reset">リセット</button>
+		</div>
+		<div class="button-wrap">
+			<div class="button-box">
+				<button id="home" class="btn btn-outline-secondary option-button">
+					<i class="fas fa-home icon"></i>
+					<p class="icon-text">home</p>
+				</button>
 			</div>
-			<button id="option_save">保存</button>
-			<a href="index.html">戻る</a>
+			<div class="button-box">
+				<button id="option_save" class="btn btn-outline-secondary option-button">
+					<i class="fas fa-save icon"></i>
+					<p class="icon-text">save</p>
+				</button>
+			</div>
+			<div class="button-box">
+				<button id="option_reset" class="btn btn-outline-danger option-button">
+					<i class="fas fa-trash-alt icon"></i>
+					<p class="icon-text">reset</p>
+				</button>
+			</div>
 		</div>
 	</body>
 </html>
