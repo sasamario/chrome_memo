@@ -38,10 +38,6 @@ const OTHER_MESSAGE = {
 $(function() {
 	//設定画面起動時に、storageの値をスライダーに反映
 	chrome.storage.local.get(['widthOption', 'langOption'], function(result) {
-		if (result['widthOption'] !== undefined) {
-			$('#size_input').val(result['widthOption']);
-			$('#size_value').html(result['widthOption']);
-		}
 		language = (result['langOption'] === undefined) ? 'english' : result['langOption'];
 		reflectLangOption(LANGUAGE[language]);
 
@@ -53,11 +49,21 @@ $(function() {
 		}
 	});
 
-	//on('input', func)でスライダー操作時もイベント発火
-	$('#size_input').on('input', function() {
-		$('#size_value').html($(this).val());
+	//ラジオボタンによる言語設定反映
+	$('input[name="lang"]').on('change', function() {
+		let languages = $('input[name="lang"]');
+		//ラジオボタンから値を取得
+		for (let i = 0; i < languages.length; i++) {
+			if (languages[i].checked) {
+				language = languages[i].value;
+				break;
+			}
+		}
+		//言語設定反映
+		reflectLangOption(LANGUAGE[language]);
 	});
 
+	//初期化処理
 	$('#option_reset').on('click', function() {
 		let deleteConfirm = window.confirm(OTHER_MESSAGE[language]['reset_confirm']);
 
@@ -65,9 +71,10 @@ $(function() {
 			//localstorageの初期化
 			chrome.storage.local.clear();
 
-			//設定画面の入力欄部分の初期化
-			$('#size_input').val(initialWidth);
-			$('#size_value').html(initialWidth);
+			//言語設定の初期化
+			reflectLangOption(LANGUAGE['english']);
+			$('#lang_en').prop('checked', true);
+			$('#lang_ja').prop('checked', false);
 		}
 	});
 
