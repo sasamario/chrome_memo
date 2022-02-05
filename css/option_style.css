@@ -1,21 +1,71 @@
 body {
-	width: 300px;
-	height: 350px;
+	width: 250px;
 }
 
-.option-section {
-	margin: 5px 0;
-}
-
-.option-title {
-	margin: 5px 0;
+.page-title {
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+	margin: 10px auto;
 }
 
 .option-wrap {
 	width: 90%;
 	margin: 10px auto;
+	padding: 5px;
+	background-color: #f2f4f6;
+	border-radius: 5px;
+}
+
+.option-section {
+	margin: 5px;
+	text-align: center;
+}
+
+.option-title {
+	text-align: left;
+	margin: 0 10px;
+	font-weight: bold;
 }
 
 #size_input {
 	width: 100%;
+}
+
+.button-wrap {
+	display: flex;
+	/* justify-contentは主軸（横軸）を指定するプロパティ */
+	justify-content: center;
+	border-top: 1px solid #6c757d;
+	padding-top: 8px;
+	margin: 10px;
+}
+
+.button-box {
+	margin: 0 5px;
+	vertical-align: middle;
+}
+
+.button-box:last-child {
+	margin-left: auto;
+}
+
+.option-button {
+	width: 45px;
+	height: 45px;
+	padding: 2px;
+}
+
+.icon {
+	cursor: pointer;
+	font-size: 25px;
+}
+
+.icon:hover {
+	opacity: 0.8;
+}
+
+.icon-text {
+	font-size: 5px;
+	margin: 0px;
 }
