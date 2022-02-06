@@ -54,6 +54,7 @@ const OTHER_MESSAGE = {
 let objUl = document.getElementById('my_tab');
 let tabTotalCount = 3;
 let activeTab = 'memo1';
+let mode = 'normal';
 let setObj = {};
 
 //tabの属性値セット処理
@@ -67,7 +68,7 @@ let createTab = (object, attributes) => {
 };
 
 $(function() {
-	chrome.storage.local.get(['tabTotalCount', 'activeTab', 'widthOption', 'heightOption', 'langOption'], function(result) {
+	chrome.storage.local.get(['tabTotalCount', 'activeTab', 'widthOption', 'heightOption', 'langOption', 'mode'], function(result) {
 		//言語設定適用
 		language = (result['langOption'] === undefined) ? 'english' : result['langOption'];
 		reflectLangOption(LANGUAGE[language]);
@@ -93,6 +94,21 @@ $(function() {
 
 		//tab生成
 		loopGenerateTab(tabTotalCount, activeTab);
+
+		//カラーモード取得
+		if (result['mode'] !== undefined) {
+			mode = result['mode'];
+		}
+
+		//仮
+		if (mode === 'dark') {
+			$('body').css('background-color', '#23282F');
+			$('.memo-area').css('background-color', '#6b778d');
+			$('.memo-area').css('color', '#fff');
+			$('body').css('color', '#fff');
+			$('.nav-tabs .nav-link').css('background-color', '#6b778d');
+			$('.nav-tabs .nav-link').css('border-color', '#23282F');
+		}
 	});
 
 	//tab追加
