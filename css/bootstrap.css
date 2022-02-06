@@ -2393,10 +2393,10 @@ textarea.form-control-lg {
   padding-left: 1.5em;
   margin-bottom: 0.125rem;
 }
-.form-check .form-check-input {
+/* .form-check .form-check-input {
   float: left;
   margin-left: -1.5em;
-}
+} */
 
 .form-check-input {
   width: 1em;

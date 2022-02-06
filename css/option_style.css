@@ -28,8 +28,21 @@ body {
 	font-weight: bold;
 }
 
-#size_input {
-	width: 100%;
+#mode_text {
+	margin-right: 5px;
+}
+
+#mode {
+	margin-left: auto;
+}
+
+.form-switch {
+	padding: 0;
+}
+
+.form-check {
+	display: inline-block;
+	padding: 0;
 }
 
 .button-wrap {
