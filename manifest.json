@@ -2,11 +2,11 @@
     "name": "simple_memo",
     "description": "シンプルなメモアプリ",
     "version": "1.0.0",
-    "manifest_version": 2,
+    "manifest_version": 3,
     "permissions": [
         "storage"
     ],
-    "browser_action": {
+    "action": {
         "default_icon": {
             "16": "img/bunbougu_memo.png"
         },
