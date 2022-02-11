@@ -1,6 +1,6 @@
 {
-    "name": "chrome_memo",
-    "description": "シンプルなメモ",
+    "name": "simple_memo",
+    "description": "シンプルなメモアプリ",
     "version": "1.0.0",
     "manifest_version": 2,
     "permissions": [
