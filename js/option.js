@@ -135,10 +135,8 @@ $(function() {
 			//localstorageの初期化
 			chrome.storage.local.clear();
 
-			//言語設定の初期化
-			reflectLangOption(LANGUAGE['english']);
-			$('#lang_en').prop('checked', true);
-			$('#lang_ja').prop('checked', false);
+			//トップに遷移
+			window.location.href = 'index.html';
 		}
 	});
 
