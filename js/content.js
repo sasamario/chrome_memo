@@ -52,7 +52,6 @@ const OTHER_MESSAGE = {
 }
 
 let objUl = document.getElementById('my_tab');
-let tabTotalCount = 3;
 let activeTab = 'memo1';
 let mode = 'normal';
 let setObj = {};
@@ -73,8 +72,12 @@ $(function() {
 		language = (result['langOption'] === undefined) ? 'english' : result['langOption'];
 		reflectLangOption(LANGUAGE[language]);
 		
-		if (result['tabTotalCount'] !== undefined) {
-			tabTotalCount =  result['tabTotalCount'];
+		let tabTotalCount = (result['tabTotalCount'] !== undefined) ? result['tabTotalCount'] : 3;
+		if (tabTotalCount === 3) {
+			//削除ボタンを非表示にする
+			$('#delete').css('display', 'none');
+		} else if (tabTotalCount === 10) {
+			$('#add').css('display', 'none');
 		}
 
 		//最後にactiveだったtabを取得
@@ -146,6 +149,12 @@ $(function() {
 		setObj['tabTotalCount'] = objLiCount;
 		setObj['activeTab'] = newTabId;
 		chrome.storage.local.set(setObj, function(){});
+
+		//ボタン表示・非表示
+		$('#delete').css('display', 'inline-block');
+		if (objLiCount === 10) {
+			$('#add').css('display', 'none');
+		}
 	});
 
 	//動的に追加した要素に対してもclickイベントを発火
@@ -181,7 +190,7 @@ $(function() {
 	$('#delete').on('click', function() {
 		//一番後ろのtab番号を取得する
 		let objLiCount = objUl.childElementCount;
-		let deleteTabId = 'memo' + objLiCount;
+		let deleteTabId = 'memo' + objLiCount; //現状一番後ろのメモを必ず削除している
 
 		//memoが3つしかない場合、削除はしない
 		if (objLiCount === 3) {
@@ -225,6 +234,14 @@ $(function() {
 				//activeTabの番号をstorageにセット
 				setObj['activeTab'] = activeTab;
 				chrome.storage.local.set(setObj, function(){});
+
+				//ボタン表示・非表示
+				$('#add').css('display', 'inline-block');
+				objUl = document.getElementById('my_tab');
+				objLiCount = objUl.childElementCount;
+				if (objLiCount === 3) {
+					$('#delete').css('display', 'none');
+				}
 			});
 		}
 	});
