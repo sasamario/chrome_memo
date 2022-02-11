@@ -221,7 +221,7 @@ $(function() {
 			//現状のタブ要素の削除(emptyで対象の子要素を削除)
 			$('#my_tab').empty();
 
-			//tab再描画 TODO:リファクタリング可能であればする
+			//tab再描画
 			chrome.storage.local.get('tabTotalCount', function(result) {
 				if (result['tabTotalCount'] !== undefined) {
 					tabTotalCount =  result['tabTotalCount'];
@@ -281,7 +281,6 @@ $(function() {
 
 		let downloadLink = document.createElement('a');
 		downloadLink.href = URL.createObjectURL(blob);
-		console.log(downloadLink);
 		downloadLink.download = fileName;
 		downloadLink.click();
 	});
@@ -318,13 +317,10 @@ $(function() {
 	//カウント処理（拡張機能起動時、keyup時、タブ切り替え時に実行する）
 	function getCount() {
 		let count = 0;
-		//textareaを取得
 		let memo = $('#memo_area').val();
 
 		//取得情報を元に文字数をカウント
-		for (let i = 0; i < memo.length; i++) {
-			count++;
-		}
+		count = memo.length;
 
 		//画面上に反映
 		$('#count').text(count);
@@ -376,6 +372,7 @@ $(function() {
 		}
 	}
 
+	//カラーモード反映処理
 	function reflectMode(Mode) {
 		for (element in Mode) {
 			for (property in Mode[element]) {
