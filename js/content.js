@@ -51,6 +51,22 @@ const OTHER_MESSAGE = {
 	}
 }
 
+//テーマカラー：ダークモード
+const DARK_MODE = {
+	'body': {
+		'background-color': '#23282F',
+		'color': '#fff'
+	},
+	'.memo-area': {
+		'background-color': '#6b778d',
+		'color': '#fff'
+	},
+	'.nav-tabs .nav-link': {
+		'background-color': '#6b778d',
+		'border-color': '#23282F'
+	}
+}
+
 let objUl = document.getElementById('my_tab');
 let activeTab = 'memo1';
 let mode = 'normal';
@@ -95,23 +111,12 @@ $(function() {
 			$('#memo_area').css('height', result['heightOption']);
 		}
 
-		//tab生成
-		loopGenerateTab(tabTotalCount, activeTab);
-
 		//カラーモード取得
-		if (result['mode'] !== undefined) {
-			mode = result['mode'];
-		}
+		if (result['mode'] !== undefined) mode = result['mode'];
+		if (mode === 'dark') reflectMode(DARK_MODE);
 
-		//仮
-		if (mode === 'dark') {
-			$('body').css('background-color', '#23282F');
-			$('.memo-area').css('background-color', '#6b778d');
-			$('.memo-area').css('color', '#fff');
-			$('body').css('color', '#fff');
-			$('.nav-tabs .nav-link').css('background-color', '#6b778d');
-			$('.nav-tabs .nav-link').css('border-color', '#23282F');
-		}
+		//tab生成
+		loopGenerateTab(tabTotalCount, activeTab, mode);
 	});
 
 	//tab追加
@@ -138,6 +143,12 @@ $(function() {
 		
 		objUl.appendChild(objLi);
 		objLi.appendChild(objButton);
+
+		if (mode === 'dark') {
+			//動的に追加したメモタブに、ダークモードのスタイルを適用
+			$('.nav-tabs .nav-link').css('background-color', '#6b778d');
+			$('.nav-tabs .nav-link').css('border-color', '#23282F');
+		}
 
 		//現在のtabからactiveクラスを取り除き、新しく追加したtabにactiveクラスを追加
 		$('.active').removeClass('active');
@@ -213,7 +224,6 @@ $(function() {
 			//tab再描画 TODO:リファクタリング可能であればする
 			chrome.storage.local.get('tabTotalCount', function(result) {
 				if (result['tabTotalCount'] !== undefined) {
-					//ここで取得した値がおかしかった　削除時に何故か2つ一気に削除されている原因？
 					tabTotalCount =  result['tabTotalCount'];
 					if (tabTotalCount > 3) {
 						tabTotalCount--;
@@ -225,7 +235,7 @@ $(function() {
 				//削除後は必ずmemo1をactiveにする
 				activeTab = 'memo1';
 
-				loopGenerateTab(tabTotalCount, activeTab);
+				loopGenerateTab(tabTotalCount, activeTab, mode);
 
 				//tabの数更新
 				setObj['tabTotalCount'] = tabTotalCount;
@@ -321,7 +331,7 @@ $(function() {
 	}
 
 	//tabをループで生成する処理
-	function loopGenerateTab(tabTotalCount, activeTab = '') {
+	function loopGenerateTab(tabTotalCount, activeTab = '', mode) {
 		for (let i = 0; i < tabTotalCount; i++) {
 			let objLi = document.createElement('li');
 			let objLiCount = i + 1;
@@ -351,6 +361,11 @@ $(function() {
 			
 			objUl.appendChild(objLi);
 			objLi.appendChild(objButton);
+
+			//カラーモードの反映
+			if (mode === 'dark') {
+				reflectMode(DARK_MODE);
+			}
 		}
 	}
 
@@ -358,6 +373,14 @@ $(function() {
 	function reflectLangOption(Option) {
 		for (key in Option) {
 			$(`#${key}`).text(Option[key]);
+		}
+	}
+
+	function reflectMode(Mode) {
+		for (element in Mode) {
+			for (property in Mode[element]) {
+				$(element).css(property, Mode[element][property]);
+			}
 		}
 	}
 });
